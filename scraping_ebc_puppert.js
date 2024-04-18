@@ -5,26 +5,7 @@ const https = require('https');
 const URL_MAIN = `https://agenciabrasil.ebc.com.br/radioagencia-nacional/geral/audio/?page=`;
 const PAGE_NUMBERS = 2;
 
-function readFileUrls() {
-    try {
-        const conteudo = fs.readFileSync('Urls.txt');
-        console.log(conteudo);
-        const urlList = conteudo.split('\n').filter(link => link.trim() !== ''); // Dividir o conteúdo por linhas e remover linhas vazias
-        return urlList;
-    } catch (err) {
-        console.error('Erro ao ler o arquivo:', err);
-        return [];
-    }
-}
-
-async function writeOnFile(urlList, fileName) {
-    urlList.forEach(async link => {
-        writeLineOnFile(link, fileName);
-    });
-};
-
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
+/// Funcoes ///
 async function writeLineOnFile(line, fileName) {
     console.log("Escrevendo em arquivo: " + fileName);
 
@@ -32,12 +13,10 @@ async function writeLineOnFile(line, fileName) {
     if(fileName.includes('Urls'))
         file = 'Urls.txt';
     else
-        file = 'materias/' + fileName + '.txt';
+        file = 'materias_coletadas/' + fileName + '.txt';
 
-    await fs.appendFile(file, line+"\n", (err) => {
-        // In case of a error throw err.
-        if (err) throw err;
-    })
+    await fs.appendFile(file, line+"\n", 
+            (err) => {if (err) throw err;})
 }
 
 function getAllUrls(allPageUrls) {
@@ -67,7 +46,7 @@ function getDownloadLink(allPageUrls) {
 async function downloadFile(fileUrl, name) {
     console.log("Download do audio da materia: " + name);
     var fileName = name + '.wav';
-    const file = fs.createWriteStream('materias/' + fileName);
+    const file = fs.createWriteStream('materias_coletadas/' + fileName);
 
     https.get(fileUrl, function(response) {
       response.pipe(file);
@@ -128,8 +107,9 @@ async function collectMaterial(url) {
         //shell.exec('pkill chrome');
     }
 };
+////////////
 
-async function foundUrls() {
+async function main() {
     const browser = await puppeteerChrome.launch({ 
         headless: false, // show browser
         channel: 'chrome', // open real chrome
@@ -163,8 +143,7 @@ async function foundUrls() {
     }
 }
 
-////////////
 /// Main ///
 console.log("I'm the bot and I do things...");
-foundUrls();
+main();
 ////////////
