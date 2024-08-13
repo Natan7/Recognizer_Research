@@ -7,12 +7,12 @@ def speechRecognition(mp3_file, file_name, folder):
     ### Convert to .wav
     wav_file = os.path.splitext(os.path.basename(mp3_file))[0] + '.wav'
     sound = AudioSegment.from_mp3(mp3_file)
-    sound.export("../data/materias_coletadas/" + wav_file, format="wav")
+    sound.export(folder + wav_file, format="wav")
     ###
     
     recognizer = sr.Recognizer()
     recognizer.energy_threshold = 300;
-    audio = sr.AudioFile('../data/materias_coletadas/'+ wav_file)
+    audio = sr.AudioFile(folder + wav_file)
 
     with audio as source:
       audio_file = recognizer.record(source)
