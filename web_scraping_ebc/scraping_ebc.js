@@ -13,7 +13,7 @@ async function writeLineOnFile(line, fileName) {
     if(fileName.includes('Urls'))
         file = 'Urls.txt';
     else
-        file = '../data/materias_coletadas/' + fileName + '.txt';
+        file = '../data/step1_news_colected/' + fileName + '.txt';
 
     await fs.appendFile(file, line+"\n", 
             (err) => {if (err) throw err;})
@@ -46,7 +46,7 @@ function getDownloadLink(allPageUrls) {
 async function downloadFile(fileUrl, name) {
     console.log("Download do audio da materia: " + name);
     var fileName = name + '.mp3';
-    const file = fs.createWriteStream('../data/materias_coletadas/' + fileName);
+    const file = fs.createWriteStream('../data/step1_news_colected/' + fileName);
 
     https.get(fileUrl, function(response) {
       response.pipe(file);
