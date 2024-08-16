@@ -128,18 +128,11 @@ def find_position_of_consecutive_words(phrase, target_words):
     
     return index
 
-####################################################################
-########################## Main ####################################
-####################################################################
-path_files = "../data/step1_news_colected"
-list_mp3_file = mp3_files(path_files)
-
-for mp3_file in list_mp3_file:
-    file_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
-
+#
+# Realiza o truncamento das matérias dos audios e textos
+#
+def truncate_news(file_name, mp3_file, path_truncated_mp3):
     cut_mp3_by_time(mp3_file, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step3_truncated_news/", 30, True)
-
-    path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
     cut_mp3_by_time(path_truncated_mp3, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step2_last_words_news/", 5, False)
 
     path_last_words_mp3 = "../data/step2_last_words_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + "_last_5_seconds.mp3"
@@ -150,9 +143,6 @@ for mp3_file in list_mp3_file:
 
     last_phrase = get_text_file(phrase_file)
     all_text = get_text_file(original_text_file)
-    
-    # Dividir o texto em palavras
-    all_words = all_text.split()
     last_three_words = get_last_three_words(last_phrase)
 
     max_match_count, phrase_found, truncated_text = find_by_word(all_text, last_phrase)
@@ -164,7 +154,23 @@ for mp3_file in list_mp3_file:
             last_phrase = words[:index_last_word]
             text_final = truncated_text + ' ' + ' '.join(last_phrase)
             output( '../data/step3_truncated_news/', file_name, text_final)
-            
-    #whisper(mp3_file, file_name, '../data/textos_whisper/')
-    #speechRecognition(mp3_file, file_name, '../data/textos_speechRecognition/')
-    #assemblyai(mp3_file, file_name, '../data/textos_assemblyai/')
+
+
+####################################################################
+########################## Main ####################################
+####################################################################
+path_files = "../data/step1_news_colected"
+list_mp3_file = mp3_files(path_files)
+
+for mp3_file in list_mp3_file:
+    file_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
+    path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
+
+    truncate_news(file_name, mp3_file, path_truncated_mp3)
+
+    whisper(path_truncated_mp3, file_name, '../data/result_whisper/')
+    speechRecognition(path_truncated_mp3, file_name, '../data/result_speechRecognition/')
+    assemblyai(path_truncated_mp3, file_name, '../data/result_assemblyai/')
+####################################################################
+####################################################################
+####################################################################
