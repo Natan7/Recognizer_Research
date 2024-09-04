@@ -50,7 +50,9 @@ def plot_similarity_scores(methods, similarity_measures, data):
     plt.tight_layout()
     plt.show()
 
-# Main execution
+####################################################################
+############################### Main ###############################
+####################################################################
 filename = '../data/similarity_results/results.txt'
 methods, similarity_measures, data = read_results_file(filename)
 plot_similarity_scores(methods, similarity_measures, data)

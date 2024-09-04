@@ -1,12 +1,5 @@
 import os
-import re
-from file_lister import mp3_files
 from output_recognizer import output_append
-from whisper_algorithm import whisper
-from speechRecognition_algorithm import speechRecognition
-from assemblyai_algorithm import assemblyai
-
-import numpy as np
 
 #
 # Coletar uma lista de textos .txt
@@ -29,14 +22,11 @@ def get_text_file(file_name):
     return phrase
 
 
-#
-# Realiza o truncamento das matérias dos audios e textos
-#
-
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+#
+# Verifica a simililaridade entre dois textos utilizando cosseno
+#
 def compute_cosine_similarity(text1, text2):
     # Create TF-IDF Vectorizer
     vectorizer = TfidfVectorizer()
@@ -49,43 +39,50 @@ def compute_cosine_similarity(text1, text2):
     
     return similarity[0][0]
 
+#
+# Verifica a simililaridade entre dois textos utilizando Jaccard
+#
 def jaccard_similarity(text1, text2):
-    # Tokenize and create sets of words
+    # Tokenizando e criando conjuntos de palavras
     set1 = set(text1.lower().split())
     set2 = set(text2.lower().split())
     
-    # Compute Jaccard similarity
+    # Calculando a Similaridade Jaccard
     intersection = len(set1.intersection(set2))
     union = len(set1.union(set2))
     
     return intersection / union
 
 from sentence_transformers import SentenceTransformer, util
-
+#
+# Verifica a simililaridade entre dois textos utilizando BERT
+#
 def compute_bert_similarity(text1, text2):
-    # Load pre-trained BERT model
+    # Carregando modelo pré-treino BERT
     model = SentenceTransformer('all-MiniLM-L6-v2')
     
-    # Encode the texts
+    # Encode os textos
     embeddings1 = model.encode(text1, convert_to_tensor=True)
     embeddings2 = model.encode(text2, convert_to_tensor=True)
     
-    # Compute cosine similarity
+    # Calculando Similaridade Cosseno
     similarity = util.pytorch_cos_sim(embeddings1, embeddings2)
     
     return similarity.item()
 
 import spacy
-
+#
+# Verifica a simililaridade entre dois textos utilizando spacy (BERT)
+#
 def compute_spacy_similarity(text1, text2):
-    # Load Spacy model
-    nlp = spacy.load('en_core_web_md')
+    # Carregando modelo Spacy
+    nlp = spacy.load('pt_core_web_md')
     
-    # Process texts
+    # Processando textos
     doc1 = nlp(text1)
     doc2 = nlp(text2)
     
-    # Compute similarity
+    # Calculando Similaridade
     similarity = doc1.similarity(doc2)
     
     return similarity
@@ -105,16 +102,11 @@ for text_file in list_text_file:
     speechRecognition_file = "../data/result_speechRecognition/" + original_file
     assemblyai_file = "../data/result_assemblyai/" + original_file
 
+    recognation_text = get_text_file(whisper_file)
     print()  
     print("======Result======")
-    print("whisper")
-    recognation_text = get_text_file(whisper_file)
-    print("----------recogn")
-    print(recognation_text)
-    print("-----------original")
-    print(original_text)
-    print()
 
+    print("whisper")
     similarity = compute_cosine_similarity(original_text, recognation_text)
     output_append( '../data/similarity_results/', 'results.txt', f"whisper - Cosine_Similarity - {similarity:.4f} - {original_file}")
     similarity = jaccard_similarity(original_text, recognation_text)
