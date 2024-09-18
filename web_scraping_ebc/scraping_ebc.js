@@ -3,7 +3,8 @@ const fs = require("fs");
 const https = require('https');
 
 const URL_MAIN = `https://agenciabrasil.ebc.com.br/radioagencia-nacional/geral/audio/?page=`;
-const PAGE_NUMBERS = 2;
+const startPageNUMBER = 119;
+const endPageNUMBER = 122;
 
 /// Funcoes ///
 async function writeLineOnFile(line, fileName) {
@@ -78,10 +79,9 @@ async function collectMaterial(url) {
         channel: 'chrome', // open real chrome
     });
     const page = await browser.newPage();
+    await page.goto(url);
 
     try {
-        await page.goto(url);
-
         const elementDownload = await page.$('.mejs__download');
         const hrefs1 = await page.evaluate(
             async (elementDownload) => Array.from(
@@ -98,17 +98,15 @@ async function collectMaterial(url) {
 
         await downloadFile(fileUrl, fileName);
         await extractText(page, fileName);
-        //await page.waitForTimeout(5000);
     } catch (error) {
         console.log(error);
     } finally {
         await browser.close();
-        //var shell = require('shelljs');
-        //shell.exec('pkill chrome');
     }
 };
 ////////////
 
+/// Main ///
 async function main() {
     const browser = await puppeteerChrome.launch({ 
         headless: false, // show browser
@@ -116,15 +114,11 @@ async function main() {
     });
     const page = await browser.pages();
 
-    /*
-    if(fs.existsSync('Urls.txt'))
-        fs.writeFile('Urls.txt', '', function(){console.log('Cleanup old File\n')})
-    */
 
     console.log("=========================");
     console.log("Buscando lista de materias");
     var urlList = [];
-    for (let pageNumber = 0; pageNumber < PAGE_NUMBERS; pageNumber++) {
+    for (let pageNumber = startPageNUMBER; pageNumber < endPageNUMBER; pageNumber++) {
         console.log(URL_MAIN+pageNumber);
 
         await page[0].goto(URL_MAIN+pageNumber);
@@ -143,7 +137,6 @@ async function main() {
     }
 }
 
-/// Main ///
 console.log("I'm the bot and I do things...");
 main();
 ////////////
