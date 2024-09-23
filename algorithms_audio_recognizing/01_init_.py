@@ -1,5 +1,6 @@
 import os
 import re
+import asyncio
 from pydub import AudioSegment
 from file_lister import mp3_files
 from output_recognizer import output
@@ -11,7 +12,7 @@ import Levenshtein
 #
 # Cortar o arquivo MP3 em segmentos de n segundos
 #
-def cut_mp3_by_time(input_file, file_name, output_directory, seconds, on_star):
+async def cut_mp3_by_time(input_file, file_name, output_directory, seconds, on_star):
     # Carrega o arquivo MP3 usando pydub
     audio = AudioSegment.from_mp3(input_file)
     
@@ -44,7 +45,7 @@ def cut_mp3_by_time(input_file, file_name, output_directory, seconds, on_star):
 #
 # Coletar texto de uma arquivo .txt
 #
-def get_text_file(file_name):
+async def get_text_file(file_name):
     with open(file_name, 'r', encoding='utf-8') as file:
         phrase = file.read().strip()
     return phrase
@@ -52,7 +53,7 @@ def get_text_file(file_name):
 #
 # Remove palavras duplicadas de um conjunto
 #
-def remove_duplicates_from_set(input_set):
+async def remove_duplicates_from_set(input_set):
     unique_list = list(input_set)
     unique_set = set(unique_list)
     return unique_set
@@ -60,7 +61,7 @@ def remove_duplicates_from_set(input_set):
 #
 # Retorna a quantidade de palavras em comum de um conjunto (frase)
 #
-def count_common_words(set1, set2):
+async def count_common_words(set1, set2):
     set1_lower = {word.lower() for word in set1}
     set2_lower = {word.lower() for word in set2}
     
@@ -70,7 +71,7 @@ def count_common_words(set1, set2):
 #
 # Retorna as 3 ultimas palavras de uma frase
 #
-def get_last_three_words(phrase):
+async def get_last_three_words(phrase):
     words = phrase.split()
     
     if len(words) < 3:
@@ -82,7 +83,7 @@ def get_last_three_words(phrase):
 #
 # Encontrar frase no texto completo e retorna o grau de similaridade da frase parágrafo da frase e texto sem o parágrafo
 #
-def find_by_word(all_text, phrase):
+async def find_by_word(all_text, phrase):
     best_match_position = -1
     max_match_count = -1
     phrase_found = ""
@@ -94,8 +95,8 @@ def find_by_word(all_text, phrase):
 
     # Iterar sobre cada frase no texto
     for idx, phrase in enumerate(text_phrases):
-        unique_set = remove_duplicates_from_set(phrase.split())
-        match_count = count_common_words(unique_set, words)
+        unique_set = await remove_duplicates_from_set(phrase.split())
+        match_count = await count_common_words(unique_set, words)
         if(max_match_count<match_count & match_count>3):
             max_match_count = match_count
             best_match_position = idx
@@ -110,7 +111,7 @@ def find_by_word(all_text, phrase):
 #
 # Retorna a posição exata no texto de um conjunto de palavras
 #
-def find_position_of_consecutive_words(phrase, target_words):
+async def find_position_of_consecutive_words(phrase, target_words):
     words = re.split(r'[,\s]+', phrase.lower())
     min_distance = 1000
     index = -1
@@ -129,48 +130,65 @@ def find_position_of_consecutive_words(phrase, target_words):
     return index
 
 #
+# Realiza conversão audios em .mp3 para .wav
+#
+async def convert_to_wav(mp3_file, folder):
+    wav_file = os.path.splitext(os.path.basename(mp3_file))[0] + '.wav'
+    sound = AudioSegment.from_mp3(mp3_file)
+    sound.export(f"{folder}/{wav_file}", format="wav")
+
+#
 # Realiza o truncamento das matérias dos audios e textos
 #
-def truncate_news(file_name, mp3_file, path_truncated_mp3):
-    cut_mp3_by_time(mp3_file, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step3_truncated_news/", 30, True)
-    cut_mp3_by_time(path_truncated_mp3, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step2_last_words_news/", 5, False)
+async def truncate_news(file_txt_name, mp3_file, path_truncated_mp3):
+    await cut_mp3_by_time(mp3_file, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step3_truncated_news/", 30, True)
+    await convert_to_wav(path_truncated_mp3, "../data/step3_truncated_news/")
 
+    await cut_mp3_by_time(path_truncated_mp3, os.path.splitext(os.path.basename(mp3_file))[0], "../data/step2_last_words_news/", 5, False)
     path_last_words_mp3 = "../data/step2_last_words_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + "_last_5_seconds.mp3"
-    speechRecognition(path_last_words_mp3, file_name, '../data/step2_last_words_news/')
+    await convert_to_wav(path_last_words_mp3, "../data/step2_last_words_news/")
+    
+    path_last_words_mp3 = "../data/step2_last_words_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + "_last_5_seconds.wav"
+    await speechRecognition(path_last_words_mp3, file_txt_name, '../data/step2_last_words_news/', False)
 
-    phrase_file = '../data/step2_last_words_news/' + file_name
-    original_text_file = '../data/step1_news_colected/' + file_name
+    phrase_file = '../data/step2_last_words_news/' + file_txt_name
+    original_text_file = '../data/step1_news_colected/' + file_txt_name
+    last_phrase = await get_text_file(phrase_file)
+    all_text = await get_text_file(original_text_file)
+    last_three_words = await get_last_three_words(last_phrase)
 
-    last_phrase = get_text_file(phrase_file)
-    all_text = get_text_file(original_text_file)
-    last_three_words = get_last_three_words(last_phrase)
-
-    max_match_count, phrase_found, truncated_text = find_by_word(all_text, last_phrase)
-
+    max_match_count, phrase_found, truncated_text = await find_by_word(all_text, last_phrase)
     if(max_match_count>0):
-        index_last_word = find_position_of_consecutive_words(phrase_found, last_three_words.split())
+        index_last_word = await find_position_of_consecutive_words(phrase_found, last_three_words.split())
         if(index_last_word>0):
             words = phrase_found.split()
             last_phrase = words[:index_last_word]
             text_final = truncated_text + ' ' + ' '.join(last_phrase)
-            output( '../data/step3_truncated_news/', file_name, text_final)
-
+            output( '../data/step3_truncated_news/', file_txt_name, text_final)
 
 ####################################################################
 ############################### Main ###############################
 ####################################################################
-path_files = "../data/step1_news_colected"
-list_mp3_file = mp3_files(path_files)
-
-for mp3_file in list_mp3_file:
-    file_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
-    path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
-
-    truncate_news(file_name, mp3_file, path_truncated_mp3)
-
-    whisper(path_truncated_mp3, file_name, '../data/result_whisper/')
-    speechRecognition(path_truncated_mp3, file_name, '../data/result_speechRecognition/')
-    assemblyai(path_truncated_mp3, file_name, '../data/result_assemblyai/')
+async def main():
+    path_files = "../data/step1_news_colected"
+    list_mp3_file = mp3_files(path_files)
+    
+    for mp3_file in list_mp3_file:
+        file_txt_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
+        path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
+        await truncate_news(file_txt_name, mp3_file, path_truncated_mp3)
+    
+    path_truncated_files = "../data/step3_truncated_news"
+    list_mp3_file = mp3_files(path_truncated_files)
+    for mp3_file in list_mp3_file:
+        file_txt_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
+        path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
+        path_truncated_wav = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".wav"
+        await whisper(path_truncated_mp3, file_txt_name, '../data/result_whisper/')
+        await assemblyai(path_truncated_mp3, file_txt_name, '../data/result_assemblyai/')
+        await speechRecognition(path_truncated_wav, file_txt_name, '../data/result_speechRecognition/', True)
+    
+asyncio.run(main())
 ####################################################################
 ####################################################################
 ####################################################################

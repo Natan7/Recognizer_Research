@@ -1,22 +1,32 @@
 import os
+import time
 import speech_recognition as sr
-from pydub import AudioSegment
 from output_recognizer import output
 
-def speechRecognition(mp3_file, file_name, folder):
-    ### Convert to .wav
-    wav_file = os.path.splitext(os.path.basename(mp3_file))[0] + '.wav'
-    sound = AudioSegment.from_mp3(mp3_file)
-    sound.export(folder + wav_file, format="wav")
-    ###
-    
+async def speechRecognition(wav_file, file_name, folder, is_record_time):
     recognizer = sr.Recognizer()
-    recognizer.energy_threshold = 300;
-    audio = sr.AudioFile(folder + wav_file)
+    audio = sr.AudioFile(wav_file)
 
     with audio as source:
-      audio_file = recognizer.record(source)
+        # Ajusta para o ruído de fundo se necessário
+        recognizer.adjust_for_ambient_noise(source)
+        audio_file = recognizer.record(source)
     
-    response = recognizer.recognize_google(audio_file, language="pt-BR")
+    start_time = time.time()  # Marca o início do tempo
+    
+    try:
+        response = recognizer.recognize_google(audio_file, language="pt-BR")
+    except sr.UnknownValueError:
+        response = "Não consegui entender o áudio."
+    except sr.RequestError as e:
+        response = f"Erro ao se conectar ao serviço de reconhecimento: {e}"
+    
+    end_time = time.time()  # Marca o fim do tempo
+
     output(folder, file_name, response)
+    
+    if(is_record_time):
+      execution_time = end_time - start_time # Calcula o tempo de execução
+      output(f"{folder}time_", file_name, f"Tempo_de_execução: {execution_time} segundos")
+
     return response
