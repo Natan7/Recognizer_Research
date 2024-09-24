@@ -14,7 +14,7 @@ async def assemblyai(mp3_file, file_name, folder):
     start_time = time.time() # Marca o início do tempo
 
     try:
-        response = await TRANSCRIBER.transcribe(mp3_file)  # Use await se for uma operação assíncrona
+        response = TRANSCRIBER.transcribe(mp3_file)  # Use await se for uma operação assíncrona
         transcribed_text = response.text
     except Exception as e:
         transcribed_text = f"Erro na transcrição: {e}"
