@@ -172,21 +172,21 @@ async def truncate_news(file_txt_name, mp3_file, path_truncated_mp3):
 async def main():
     path_files = "../data/step1_news_colected"
     list_mp3_file = mp3_files(path_files)
-    """
+    
     for mp3_file in list_mp3_file:
         file_txt_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
         path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
         await truncate_news(file_txt_name, mp3_file, path_truncated_mp3)
-    """
+    
     path_truncated_files = "../data/step3_truncated_news"
     list_mp3_file = mp3_files(path_truncated_files)
     for mp3_file in list_mp3_file:
         file_txt_name = os.path.splitext(os.path.basename(mp3_file))[0] + '.txt'
         path_truncated_mp3 = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".mp3"
         path_truncated_wav = "../data/step3_truncated_news/" + os.path.splitext(os.path.basename(mp3_file))[0] + ".wav"
-        #await whisper(path_truncated_mp3, file_txt_name, '../data/result_whisper/')
+        await whisper(path_truncated_mp3, file_txt_name, '../data/result_whisper/')
         await assemblyai(path_truncated_mp3, file_txt_name, '../data/result_assemblyai/')
-        #await speechRecognition(path_truncated_wav, file_txt_name, '../data/result_speechRecognition/', True)
+        await speechRecognition(path_truncated_wav, file_txt_name, '../data/result_speechRecognition/', True)
     
 asyncio.run(main())
 ####################################################################
