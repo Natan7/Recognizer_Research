@@ -1,0 +1,1 @@
+Tempo_de_execução: 35.65319490432739 segundos

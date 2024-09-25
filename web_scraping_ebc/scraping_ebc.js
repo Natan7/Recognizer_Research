@@ -15,6 +15,7 @@ async function writeLineOnFile(line, fileName) {
         file = 'Urls.txt';
     else
         file = '../data/step1_news_colected/' + fileName + '.txt';
+        //file = '../data/test/' + fileName + '.txt';
 
     await fs.appendFile(file, line+"\n", 
             (err) => {if (err) throw err;})
@@ -48,6 +49,7 @@ async function downloadFile(fileUrl, name) {
     console.log("Download do audio da materia: " + name);
     var fileName = name + '.mp3';
     const file = fs.createWriteStream('../data/step1_news_colected/' + fileName);
+    //const file = fs.createWriteStream('../data/test/' + fileName);
 
     https.get(fileUrl, function(response) {
       response.pipe(file);

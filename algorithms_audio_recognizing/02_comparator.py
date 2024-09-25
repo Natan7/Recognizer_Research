@@ -116,13 +116,13 @@ async def main():
         recognation_time = float(get_text_file(whisper_time_file).split(' ')[1])
     
         similarity = compute_cosine_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"whisper - Cosine_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - Cosseno - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = jaccard_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"whisper - Jaccard_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - Jaccard - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"whisper - Spacy_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"whisper - BERT_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         
         ### Google Speech Recognition
         speechRecognition_file = f"../data/result_speechRecognition/{original_file}"
@@ -132,13 +132,13 @@ async def main():
         recognation_time = float(get_text_file(speechRecognition_time_file).split(' ')[1])
 
         similarity = compute_cosine_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"speechRecognition - Cosine_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - Cosseno - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = jaccard_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"speechRecognition - Jaccard_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - Jaccard - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"speechRecognition - Spacy_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"speechRecognition - BERT_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
 
         ### Assemblyai
         assemblyai_file = f"../data/result_assemblyai/{original_file}"
@@ -148,13 +148,13 @@ async def main():
         recognation_time = float(get_text_file(assemblyai_time_file).split(' ')[1])
 
         similarity = compute_cosine_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"assemblyai - Cosine_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - Cosseno - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = jaccard_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"assemblyai - Jaccard_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - Jaccard - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"assemblyai - Spacy_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"assemblyai - BERT_Similarity - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         
         print("====== Fim do calculo e registros dos resultados ======")
 asyncio.run(main())

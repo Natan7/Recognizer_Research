@@ -1,0 +1,12 @@
+Whisper: Tempo Min 13.7026 s - 20_06_24_-_tatiana_alves_-_desigualdade_salarial_ra_eg.txt
+Whisper: Tempo Max 105.3934 s - embargada_para_12-05-24-_tatiana_alves_-_maternidade_apos_os_40_anos_-_ra_lf.txt
+Whisper: Percentual Min 5.65% - 26-07-24_-_oussama_el_ghaouri_-_revisao_bpc_-_ra_pl.txt
+Whisper: Percentual Max 100.0% - 14-09-24-_juliana_batista-_aux_-recostrucao_ra_eg.txt
+Google_Speech_Recognition: Tempo Min 1.6842 s - 18-05-24_-_madson_euler_-_cnu_discursiva_ra_ms.txt
+Google_Speech_Recognition: Tempo Max 11.8529 s - 10-05-24_-_oussama_el_ghaouri_-_numeros_chuvas_rs-_ra_lj.txt
+Google_Speech_Recognition: Percentual Min 6.58% - 27-05-24_-_sintonia_com_o_sul_-_7h_as_7h30_ra_ps.txt
+Google_Speech_Recognition: Percentual Max 100.0% - 30-07-24_-_historia_hoje_-_10o_dia_mundial_contra_o_trafico_de_pessoas.txt
+Assemblyai: Tempo Min 4.7759 s - 20_06_24_-_tatiana_alves_-_desigualdade_salarial_ra_eg.txt
+Assemblyai: Tempo Max 259.0056 s - 01-07-24_-_renato_ribeiro_-_tempo_sul_-_ra_lp.txt
+Assemblyai: Percentual Min 5.88% - 28-05-24_viva_maria_dia_internacional_de_luta_pela_saude_das_mulheres_raps.txt
+Assemblyai: Percentual Max 100.0% - 05_08_24_-_solimar_luz_-_gaeco_denuncia_diretores_hospital_ra_ps.txt
