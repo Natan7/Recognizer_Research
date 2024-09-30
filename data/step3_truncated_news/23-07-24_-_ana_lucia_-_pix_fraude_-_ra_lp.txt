@@ -1,0 +1,3 @@
+Mudanças nos ajustes nos mecanismos de segurança do Pix para combater fraudes e golpes foram anunciadas, nessa segunda-feira, pelo Banco Central.  As mudanças entram em vigor no dia 1º de novembro.
+
+Nos casos em que o dispositivo de acesso eletrônico ao Pix, celulares ou computadores, não estiver cadastrado no banco, as transações não poderão ser maiores que R$ 200. Quando houver a mudança para um celular
