@@ -58,7 +58,9 @@ from transformers import AutoModel, AutoTokenizer
 import torch
 import torch.nn.functional as F
 
-# Função para calcular a similaridade entre dois textos usando BERT
+#
+# Função para calcular a similaridade entre dois textos usando SBERT
+#
 def compute_bert_similarity(text1, text2):
     # Carregar o modelo e o tokenizer
     model_name = 'neuralmind/bert-base-portuguese-cased'
@@ -81,7 +83,7 @@ def compute_bert_similarity(text1, text2):
 
 import spacy
 #
-# Verifica a simililaridade entre dois textos utilizando spacy (BERT)
+# Verifica a simililaridade entre dois textos utilizando spacy (SBERT)
 #
 def compute_spacy_similarity(text1, text2):
     # Carregando modelo Spacy
@@ -122,7 +124,7 @@ async def main():
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
         output_append( '../data/similarity_results/', 'results.txt', f"Whisper - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Whisper - SBERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         
         ### Google Speech Recognition
         speechRecognition_file = f"../data/result_speechRecognition/{original_file}"
@@ -138,7 +140,7 @@ async def main():
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
         output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Google_Speech_Recognition - SBERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
 
         ### Assemblyai
         assemblyai_file = f"../data/result_assemblyai/{original_file}"
@@ -154,7 +156,7 @@ async def main():
         similarity = compute_spacy_similarity(original_text, recognation_text)*100
         output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - Spacy - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         similarity = compute_bert_similarity(original_text, recognation_text)*100
-        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - BERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
+        output_append( '../data/similarity_results/', 'results.txt', f"Assemblyai - SBERT - {similarity:.2f} - {recognation_time:.4f} - {original_file}")
         
         print("====== Fim do calculo e registros dos resultados ======")
 asyncio.run(main())

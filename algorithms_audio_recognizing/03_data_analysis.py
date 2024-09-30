@@ -54,13 +54,13 @@ def plot_similarity_scores(methods, similarity_measures, data):
     for i, method in enumerate(methods):
         ax.bar(x + i * width, scores[method], width, label=method, color=colors.get(method))
     
-    ax.set_xlabel('Métodos de Similaridade', fontweight='bold')
-    ax.set_ylabel('Percentual (%)', fontweight='bold')
-    plt.yticks(np.arange(0, 101, 10)) # Definindo ticks do eixo Y de 10 em 10
+    ax.set_xlabel('Métodos de Similaridade', fontweight='bold', fontsize=12)
+    ax.set_ylabel('Percentual (%)', fontweight='bold', fontsize=12)
+    plt.yticks(np.arange(0, 101, 10), fontsize=12) # Definindo ticks do eixo Y de 10 em 10
     ax.set_title('Gráficos do Percentual de Similaridade', fontweight='bold')
     ax.set_xticks(x + width * (len(methods) - 1) / 2)
-    ax.set_xticklabels(similarity_measures, rotation=0, ha='center')
-    ax.legend(title='Ferramentas', loc=(0.77, -0.18))  # Alterando a posição da legenda
+    ax.set_xticklabels(similarity_measures, rotation=0, ha='center', fontsize=11)
+    ax.legend(title='Ferramentas', loc=(0.77, -0.22), fontsize=12)  # Alterando a posição da legenda
 
     plt.tight_layout()
     plt.savefig('../data/similarity_results/Grafico_Porcentagens.png')
@@ -118,49 +118,6 @@ def plot_boxplot(data):
     plt.tight_layout()
     plt.savefig('../data/similarity_results/Grafico_Boxplot_Tempos.png')
 
-"""
-def plot_scatter_times(data):
-    # Inicializando um dicionário para armazenar os tempos
-    time_data = {}
-
-    # Processando os dados
-    for method, measure, score, time, file_name in data:
-        if method not in time_data:
-            time_data[method] = []
-        time_data[method].append(time)
-
-    # Separando os dados para o gráfico
-    methods = list(time_data.keys())
-    all_times = [time for times in time_data.values() for time in times]
-    all_methods = [method for method in methods for _ in time_data[method]]
-
-    # Criando o gráfico de dispersão
-    plt.figure(figsize=(12, 6))
-    
-    # Adicionando linhas horizontais a cada 2 segundos
-    max_value = int(max(all_times)) + 2  # Ajuste para incluir a última linha
-    for y in range(0, max_value + 1, 2):
-        plt.axhline(y=y, color='gray', linestyle='--', linewidth=0.7)
-
-    # Criando o gráfico de dispersão
-    plt.scatter(all_methods, all_times, color='blue', alpha=0.6)
-
-    plt.xlabel('Métodos de Similaridade', fontweight='bold')
-    plt.ylabel('Tempo (segundos)', fontweight='bold')  # Rótulo em negrito
-    plt.title('Dispersão do Tempo por Método de Similaridade', fontweight='bold')
-    
-    # Ajustando o limite do eixo Y para ir até 36
-    plt.ylim(0, 36)
-
-    # Definindo ticks do eixo Y de 4 em 4
-    plt.yticks(np.arange(0, 37, 4))
-
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    plt.savefig('../data/similarity_results/dispersao_tempos.png')
-    plt.show()
-"""
-
 #
 # Obtém o maior e o menor tempo para cada método de similaridade.
 # Retorna: Um dicionário com o método como chave e uma tupla (menor_tempo, maior_tempo) como valor.
@@ -209,9 +166,8 @@ def get_max_min_scores(data):
 filename = '../data/similarity_results/results.txt'
 methods, similarity_measures, data = read_results_file(filename)
 plot_similarity_scores(methods, similarity_measures, data)
-plot_average_times(data)
 plot_boxplot(data)
-#plot_scatter_times(data)
+plot_average_times(data)
 
 max_min_times = get_max_min_times(data)
 max_min_scores = get_max_min_scores(data)
