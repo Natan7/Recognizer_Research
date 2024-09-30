@@ -1,0 +1,11 @@
+
+                                                              O Gabinete de Segurança Institucional da Presidência da República, o GSI, publicou um alerta para administração pública federal com procedimentos que devem ser adotados diante do apagão cibernético ocorrido em todo o mundo nesta sexta.
+
+O Centro de Prevenção, Tratamento e Resposta a Incidentes Cibernéticos de Governo, órgão do GSI, orientou as entidades públicas a identificarem a presença do antivírus CrowdStrike Falcon em seus computadores e a monitorarem as atualizações da aplicação no sistema da empresa. O GSI ainda sugere medidas de mitigação em caso de travamentos ou indisponibilidade do Windows.
+
+O pesquisador em tecnologias digitais Sérgio Amadeu explica que a maior parte das empresas afetadas tinha suas aplicações rodando no servidor em nuvem da Microsoft. Para Sérgio Amadeu, que também é professor da Universidade Federal do ABC, o apagão mostra que é necessário que o país garanta a soberania de seus dados.
+
+O Supremo Tribunal Federal informou que em um dos sistemas do órgão foi verificada a falha, mas que pela manhã o portal do STF já havia sido reestabelecido. E que os sistemas judiciais e administrativos já estão funcionando adequadamente.
+
+Em nota, o Ministério da Gestão e Inovação em Serviços Públicos afirmou que a rede GOV.BR não foi afetada. Até o momento, somente a Agência Nacional de Transporte Terrestre relatou instabilidades em seu ambiente tecnológico, que foram prontamente solucionadas.
+		        

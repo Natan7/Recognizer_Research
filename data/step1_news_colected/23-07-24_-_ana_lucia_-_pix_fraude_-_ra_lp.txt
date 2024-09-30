@@ -1,0 +1,13 @@
+
+                                                              Mudanças nos ajustes nos mecanismos de segurança do Pix para combater fraudes e golpes foram anunciadas, nessa segunda-feira, pelo Banco Central.  As mudanças entram em vigor no dia 1º de novembro.
+
+Nos casos em que o dispositivo de acesso eletrônico ao Pix, celulares ou computadores, não estiver cadastrado no banco, as transações não poderão ser maiores que R$ 200.  
+
+Quando houver a mudança para um celular desconhecido, o limite diário de transações instantâneas via Pix não poderá ultrapassar R$ 1.000.
+
+Para transações fora destes limites, o novo dispositivo de acesso ao Pix (celular ou computador) deverá ser previamente cadastrado pelo cliente no banco para realizar as transferências, assim como nos casos em que o usuário mudar de aparelho.
+
+Segundo o Banco Central, essa exigência de cadastro se aplica apenas a aparelhos que nunca tenham sido usados para iniciar uma transação por Pix, para não causar inconvenientes aos clientes que já usam um dispositivo eletrônico específico.
+
+A ideia é diminuir a possibilidade de fraudadores usarem dispositivos diferentes daqueles já em uso pelo cliente para gerenciar chaves e iniciar as transações por Pix, quando houver o roubo ou conhecimento de login e senha do cliente.
+		        

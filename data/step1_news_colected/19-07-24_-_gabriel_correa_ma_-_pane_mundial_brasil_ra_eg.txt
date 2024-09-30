@@ -1,0 +1,23 @@
+
+                                                              Bancos brasileiros tiveram instabilidade e companhias aéreas atrasaram voos nesta sexta-feira (19) por causa da falha no sistema em nuvem da empresa norte-americana Microsoft.
+
+Aqui no Brasil, o banco Bradesco foi um dos primeiros a informar que as plataformas digitais não estavam disponíveis para clientes.
+
+A empresa Aena, que faz a gestão de 17 aeroportos no Brasil, comunicou que foram registradas, até o meio da manhã, oito decolagens atrasadas. A Azul, por exemplo, recomendou que os passageiros chegassem mais cedo aos aeroportos. No Aeroporto Santos Dumont, no Rio de Janeiro, o check-in começou a ser feito manualmente.
+
+O problema iniciou por causa da atualização de um produto oferecido pela empresa norte-americana CrowdStrike, e que afetou quem usa o sistema operacional Windows. Em um vídeo promocional, lançado neste ano, a empresa de segurança cibernética diz que mais da metade das 500 maiores corporações dos Estados Unidos usam esse software.
+
+O sistema de monitoramento da internet Downdetector indicou que o problema no Brasil afetou não apenas o sistema Microsoft 365, mas também sistemas de comunicação como Globo e Sky.
+
+Entretanto, o apagão foi mais forte em outros países.
+
+De acordo com a Agência Reuters, cerca de 1,4 mil voos comerciais já foram cancelados nesta sexta-feira em todo o mundo. A American Airlines e outras três grandes companhias aéreas internacionais suspenderam os voos. A Air France-KLM disse que as operações também foram afetadas.
+
+Instituições financeiras da Austrália, Índia e África do Sul relataram falhas nos serviços.
+
+No Reino Unido, o sistema de saúde teve que recorrer ao papel e à caneta para preenchimento de prontuários. Uma das principais emissoras do país, a Sky News, ficou fora do ar e até o clube de futebol Manchester United teve que adiar um lançamento programado de ingressos.
+
+O Centro de Prevenção, Tratamento e Resposta a Incidentes Cibernéticos do Governo Federal compartilhou o alerta para que a administração pública federal identifique em seus inventários a existência desse software que gerou o apagão.
+
+A plataforma de computação em nuvem da Microsoft também publicou os procedimentos para recuperação dos computadores e informou que o problema havia sido corrigido.
+		        
